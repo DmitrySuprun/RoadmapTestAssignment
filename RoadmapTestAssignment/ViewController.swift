@@ -9,37 +9,15 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let service = NetService()
-
-    let scrollView = UIScrollView()
+    var model: DataModel!
+    
+    let measurementsCollectionView = MeasurementsCollectionView()
+    
+    let scrollView = UIView()
     
     let contentView: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = 20
-        view.backgroundColor = .black
         return view
-    }()
-    
-    let backgroundImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "1")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    let button: UIButton = {
-        let button = UIButton()
-        button.setTitle("Hello", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    let setupButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "gearshape"), for: .normal)
-        return button
     }()
     
     let nameLabel: UILabel = {
@@ -52,31 +30,40 @@ class ViewController: UIViewController {
         return label
     }()
     
-    let subtitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-        label.numberOfLines = 0
-        label.sizeToFit()
-        label.textColor = UIColor.white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    let setupButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "gearshape"), for: .normal)
+        var config = UIImage.SymbolConfiguration(pointSize: 40, weight: UIImage.SymbolWeight.medium)
+        button.setPreferredSymbolConfiguration(config, forImageIn: .normal)
+        button.tintColor = .white
+        return button
+    }()
+    
+    let button: UIButton = {
+        let button = UIButton()
+        button.setTitle("Hello", for: .normal)
+        button.backgroundColor = .systemBlue
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        view.backgroundColor = .black
         setupScrollView()
         setupViews()
-        service.loadData()
+        
+        let randomItem = Int.random(in: 0...model.item.count - 1)
+        let item = model.item[randomItem]
+        measurementsCollectionView.measurementsData.append((String(item.height.meters ?? 0),"Height"))
+        measurementsCollectionView.measurementsData.append((String(item.diameter.meters ?? 0),"Diameter"))
+        measurementsCollectionView.measurementsData.append((String(item.mass.kg),"Mass"))
+        measurementsCollectionView.measurementsData.append((String(item.payload_weights[0].kg),"Pay load"))
+
     }
     
     func setupScrollView() {
-        
-        view.addSubview(backgroundImageView)
-        backgroundImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        backgroundImageView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        backgroundImageView.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 300).isActive = true
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -90,7 +77,7 @@ class ViewController: UIViewController {
         
         contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        contentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 230).isActive = true
+        contentView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
         contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
         
     }
@@ -104,17 +91,21 @@ class ViewController: UIViewController {
         contentView.addSubview(setupButton)
         setupButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
         setupButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
+        setupButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        setupButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        contentView.addSubview(subtitleLabel)
-        subtitleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        subtitleLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 25).isActive = true
-        subtitleLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 3/4).isActive = true
+        contentView.addSubview(measurementsCollectionView)
+        measurementsCollectionView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20).isActive = true
+        measurementsCollectionView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        measurementsCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+        measurementsCollectionView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+
 
         contentView.addSubview(button)
         button.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        button.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 20).isActive = true
+        button.topAnchor.constraint(equalTo: measurementsCollectionView.bottomAnchor, constant: 20).isActive = true
         button.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1/2).isActive = true
         button.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
     }
 }
+
