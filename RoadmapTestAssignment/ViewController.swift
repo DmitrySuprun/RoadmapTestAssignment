@@ -40,6 +40,18 @@ class ViewController: UIViewController {
         return button
     }()
     
+    let firstFlight: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let firstFlightValue: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     let button: UIButton = {
         let button = UIButton()
         button.setTitle("Hello", for: .normal)
@@ -59,7 +71,9 @@ class ViewController: UIViewController {
         measurementsCollectionView.measurementsData.append((String(item.height.meters ?? 0),"Height"))
         measurementsCollectionView.measurementsData.append((String(item.diameter.meters ?? 0),"Diameter"))
         measurementsCollectionView.measurementsData.append((String(item.mass.kg),"Mass"))
-        measurementsCollectionView.measurementsData.append((String(item.payload_weights[0].kg),"Pay load"))
+        measurementsCollectionView.measurementsData.append((String(item.payloadWeights[0].kg),"Pay load"))
+        
+        firstFlight.text = item.firstFlight
 
     }
     
@@ -99,7 +113,10 @@ class ViewController: UIViewController {
         measurementsCollectionView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         measurementsCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
         measurementsCollectionView.heightAnchor.constraint(equalToConstant: 120).isActive = true
-
+        
+        contentView.addSubview(firstFlight)
+        firstFlight.topAnchor.constraint(equalTo: measurementsCollectionView.bottomAnchor, constant: 20).isActive = true
+        firstFlight.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
 
         contentView.addSubview(button)
         button.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true

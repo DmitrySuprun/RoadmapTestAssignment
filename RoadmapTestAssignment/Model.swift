@@ -29,32 +29,51 @@ struct DataModel: Decodable {
         var diameter: LengthUnit
         var mass: MassUnit
         
-        var first_stage: FirstStage
+        var firstStage: FirstStage
         struct FirstStage: Decodable {
-            var thrust_sea_level: TorqueUnit
-            var thrust_vacuum: TorqueUnit
+            var thrustSeaLevel: TorqueUnit
+            var thrustVacuum: TorqueUnit
             var reusable: Bool
             var engines: Int
-            var fuel_amount_tons: Double
-            var burn_time_sec: Int?
+            var fuelAmountTons: Double
+            var burnTimeSec: Int?
+            
+            enum CodingKeys: String, CodingKey {
+                case thrustSeaLevel = "thrust_sea_level"
+                case thrustVacuum = "thrust_vacuum"
+                case reusable, engines
+                case fuelAmountTons = "fuel_amount_tons"
+                case burnTimeSec = "burn_time_sec"
+            }
         }
         
-        var second_stage: SecondStage
+        var secondStage: SecondStage
         struct SecondStage: Decodable {
             var thrust: TorqueUnit
             var payloads: Payloads
             struct Payloads: Decodable {
-                var composite_fairing: CompositeFairing
+                var compositeFairing: CompositeFairing
                 struct CompositeFairing: Decodable {
                     var height: LengthUnit
                     var diameter: LengthUnit
                 }
-                var option_1: String
+                var option1: String
+                
+                enum CodingKeys: String, CodingKey {
+                    case compositeFairing = "composite_fairing"
+                    case option1 = "option_1"
+                }
             }
             var reusable: Bool
             var engines: Int
-            var fuel_amount_tons: Double
-            var burn_time_sec: Int?
+            var fuelAmountTons: Double
+            var burnTimeSec: Int?
+            
+            enum CodingKeys: String, CodingKey {
+                case thrust, payloads, reusable, engines
+                case fuelAmountTons = "fuel_amount_tons"
+                case burnTimeSec = "burn_time_sec"
+            }
         }
         
         
@@ -65,25 +84,36 @@ struct DataModel: Decodable {
                 var sea_level: Int
                 var vacuum: Int
             }
-            var thrust_sea_level: TorqueUnit
-            var thrust_vacuum: TorqueUnit
+            var thrustSeaLevel: TorqueUnit
+            var thrustVacuum: TorqueUnit
             var number: Int
             var type: String
             var version: String
             var layout: String?
-            var engine_loss_max: Int?
-            var propellant_1: String
-            var propellant_2: String
-            var thrust_to_weight: Double
+            var engineLossMax: Int?
+            var propellant1: String
+            var propellant2: String
+            var thrustToWeight: Double
+            
+            enum CodingKeys: String, CodingKey {
+                case isp, number, type, version, layout
+                case thrustSeaLevel = "thrust_sea_level"
+                case thrustVacuum = "thrust_vacuum"
+                case engineLossMax = "engine_loss_max"
+                case propellant1 = "propellant_1"
+                case propellant2 = "propellant_2"
+                case thrustToWeight = "thrust_to_weight"
+                
+            }
         }
         
-        var landing_legs: LandingLegs
+        var landingLegs: LandingLegs
         struct LandingLegs: Decodable {
             var number: Int
             var material: String?
         }
         
-        var payload_weights: [PayloadWeight]
+        var payloadWeights: [PayloadWeight]
         struct PayloadWeight: Decodable {
             var id: String
             var name: String
@@ -91,21 +121,34 @@ struct DataModel: Decodable {
             var lb: Int
         }
         
-        var flickr_images: [String]
+        var flickrImages: [String]
         
         var name: String
         var type: String
         var active: Bool
         var stages: Int
         var boosters: Int
-        var cost_per_launch: Int
-        var success_rate_pct: Int
-        var first_flight: String
+        var costPerLaunch: Int
+        var successRatePct: Int
+        var firstFlight: String
         var country: String
         var company: String
         var wikipedia: String
         var description: String
         var id: String
+        
+        enum CodingKeys: String, CodingKey {
+            case height, diameter, mass, engines, name, type, active, stages, boosters, country, company, wikipedia, description, id
+            case firstStage = "first_stage"
+            case secondStage = "second_stage"
+            case landingLegs = "landing_legs"
+            case payloadWeights = "payload_weights"
+            case flickrImages = "flickr_images"
+            case costPerLaunch = "cost_per_launch"
+            case successRatePct = "success_rate_pct"
+            case firstFlight = "first_flight"
+            
+        }
     }
     
     init(from decoder: Decoder) throws {

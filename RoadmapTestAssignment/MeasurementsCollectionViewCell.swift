@@ -14,12 +14,14 @@ class MeasurementsCollectionViewCell: UICollectionViewCell {
     var parameterName: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .headline)
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     var parameterValue: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .systemGray
         return label
     }()
     
@@ -28,7 +30,7 @@ class MeasurementsCollectionViewCell: UICollectionViewCell {
         
         layer.cornerRadius = 35
         clipsToBounds = true
-        backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        backgroundColor = UIColor(red: 0.129, green: 0.129, blue: 0.129, alpha: 1)
         
         addSubview(parameterName)
         addSubview(parameterValue)

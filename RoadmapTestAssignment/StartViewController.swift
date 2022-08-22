@@ -14,11 +14,9 @@ class StartViewController: UIViewController {
     var model: DataModel!
     
     let backgroundImageView: UIImageView = {
-        let randomImageName = String(Int.random(in: 1...4))
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: randomImageName)
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     let startButton: UIButton = {
@@ -27,6 +25,7 @@ class StartViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.contentMode = .scaleAspectFit
         button.backgroundColor = .white
+        button.tintColor = .darkGray
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(startButtonPressed(_:)), for: .touchUpInside)
@@ -41,8 +40,14 @@ class StartViewController: UIViewController {
         service.loadData { model in
             self.model = model
             
-            DispatchQueue.main.async {
-                self.startButton.isEnabled = true
+            let item = model.item[Int.random(in: 0..<model.item.count)]
+            let imageUrl = item.flickrImages[Int.random(in: 0..<item.flickrImages.count)]
+            
+            self.service.loadImage(url: imageUrl) { data in
+                DispatchQueue.main.async {
+                    self.backgroundImageView.image = UIImage(data: data)
+                    self.startButton.isEnabled = true
+                }
             }
         }
     }
