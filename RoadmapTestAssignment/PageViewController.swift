@@ -21,6 +21,7 @@ class PageViewController: UIPageViewController {
         self.vc3 = ViewController(data: data.item[2])
         self.vc4 = ViewController(data: data.item[3])
         setViewControllers([vc1!], direction: .forward, animated: true)
+        view.backgroundColor = .black
         
     }
     
@@ -65,7 +66,7 @@ extension PageViewController: UIPageViewControllerDelegate, UIPageViewController
     }
     
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        3
+        4
     }
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         0

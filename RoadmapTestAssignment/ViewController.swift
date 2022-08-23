@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Falcon Heavy"
+        label.text = ""
         label.font = .preferredFont(forTextStyle: .largeTitle)
         label.numberOfLines = 0
         label.textColor = UIColor.white
@@ -42,13 +42,22 @@ class ViewController: UIViewController {
         return button
     }()
     
-    let button: UIButton = {
+    let showInfoButton: UIButton = {
         let button = UIButton()
         button.setTitle("Show info", for: .normal)
         button.backgroundColor = .systemBlue
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(showInfoButtonPressed(_:)), for: .touchUpInside)
         return button
     }()
+    
+    @objc func showInfoButtonPressed(_ sender: UIButton) {
+        let settingsViewController = SettingsTableViewController()
+//        present(settingsViewController, animated: true)
+        let naviVC = UINavigationController(rootViewController: self)
+        naviVC.pushViewController(settingsViewController, animated: true)
+    }
+    
     
     init(data: DataModel.Item) {
         self.modelItem = data
@@ -112,6 +121,7 @@ class ViewController: UIViewController {
         contentView.addSubview(nameLabel)
         nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20).isActive = true
         nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
+        nameLabel.text = modelItem.name
         
         contentView.addSubview(setupButton)
         setupButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
@@ -125,18 +135,18 @@ class ViewController: UIViewController {
         measurements.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
         measurements.heightAnchor.constraint(equalToConstant: 120).isActive = true
         
-        contentView.addSubview(button)
-        button.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        button.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        button.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1/2).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        contentView.addSubview(showInfoButton)
+        showInfoButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        showInfoButton.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        showInfoButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1/2).isActive = true
+        showInfoButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
         contentView.addSubview(info)
         info.translatesAutoresizingMaskIntoConstraints = false
         info.topAnchor.constraint(equalTo: measurements.bottomAnchor).isActive = true
         info.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         info.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        info.bottomAnchor.constraint(equalTo: button.topAnchor).isActive = true
+        info.bottomAnchor.constraint(equalTo: showInfoButton.topAnchor).isActive = true
     }
 }
 

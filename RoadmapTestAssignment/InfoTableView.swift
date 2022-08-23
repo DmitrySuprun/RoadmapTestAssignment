@@ -12,10 +12,11 @@ class InfoTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     var data = [(String, String)]()
     
     override init(frame: CGRect, style: UITableView.Style) {
-        super .init(frame: frame, style: style)
+        super .init(frame: frame, style: .insetGrouped)
         register(InfoTableViewCell.self, forCellReuseIdentifier: InfoTableViewCell.reuseID)
         delegate = self
         dataSource = self
+        backgroundColor = .black
     }
     
     required init?(coder: NSCoder) {
@@ -36,11 +37,18 @@ class InfoTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UITableViewHeaderFooterView()
+        var content = header.defaultContentConfiguration()
+        content.textProperties.font = .preferredFont(forTextStyle: .title1)
+        content.textProperties.alignment = .natural
+        content.textProperties.color = .white
         switch section {
-        case 1: return "First stage"
-        case 2: return "Second stage"
-        default: return ""
+        case 1: content.text = "First stage"
+        case 2: content.text =  "Second stage"
+        default: content.text = ""
         }
+        header.contentConfiguration = content
+        return header
     }
 }
