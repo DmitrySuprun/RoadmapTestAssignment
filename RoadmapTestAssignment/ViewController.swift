@@ -42,15 +42,6 @@ class ViewController: UIViewController {
         return button
     }()
     
-    let showInfoButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Show info", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(showInfoButtonPressed(_:)), for: .touchUpInside)
-        return button
-    }()
-    
     @objc func showInfoButtonPressed(_ sender: UIButton) {
         let settingsViewController = SettingsTableViewController()
 //        present(settingsViewController, animated: true)
@@ -135,18 +126,12 @@ class ViewController: UIViewController {
         measurements.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
         measurements.heightAnchor.constraint(equalToConstant: 120).isActive = true
         
-        contentView.addSubview(showInfoButton)
-        showInfoButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        showInfoButton.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        showInfoButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1/2).isActive = true
-        showInfoButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        
         contentView.addSubview(info)
         info.translatesAutoresizingMaskIntoConstraints = false
         info.topAnchor.constraint(equalTo: measurements.bottomAnchor).isActive = true
         info.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         info.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        info.bottomAnchor.constraint(equalTo: showInfoButton.topAnchor).isActive = true
+        info.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
 }
 

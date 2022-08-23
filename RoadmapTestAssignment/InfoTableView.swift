@@ -51,4 +51,28 @@ class InfoTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
         header.contentConfiguration = content
         return header
     }
+        func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        let view = UIView()
+        let showInfoButton: UIButton = {
+            let button = UIButton()
+            button.setTitle("Show info", for: .normal)
+            button.backgroundColor = .systemBlue
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.addTarget(self, action: #selector(showInfoButtonPressed(_:)), for: .touchUpInside)
+            return button
+        }()
+        view.addSubview(showInfoButton)
+        showInfoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        showInfoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        showInfoButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/2).isActive = true
+        showInfoButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+            return section == 2 ? view : nil
+    }
+    
+    @objc func showInfoButtonPressed(_ sender: UIButton) {
+        let settingsViewController = SettingsTableViewController()
+        print("asdfasdfasfd")
+    }
 }
