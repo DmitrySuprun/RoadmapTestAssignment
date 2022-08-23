@@ -9,7 +9,6 @@ import UIKit
 
 class StartViewController: UIViewController {
     
-    
     let service = NetService()
     var model: DataModel!
     
@@ -19,6 +18,7 @@ class StartViewController: UIViewController {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
+    
     let startButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Start", for: .normal)
@@ -37,6 +37,7 @@ class StartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        
         service.loadData { model in
             self.model = model
             
@@ -54,11 +55,8 @@ class StartViewController: UIViewController {
     
     @objc func startButtonPressed(_ sender: UIButton) {
         
-        let viewController = ViewController()
-        if let presentationController = viewController.presentationController as? UISheetPresentationController {
-            presentationController.detents = [.medium(), .large()]
-        }
-        viewController.model = model
+        let viewController = PageViewController(data: model)
+        self.modalPresentationStyle = .fullScreen
         self.present(viewController, animated: true)
     }
     

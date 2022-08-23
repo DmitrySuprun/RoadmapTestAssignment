@@ -9,9 +9,11 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var model: DataModel!
+    var modelItem: DataModel.Item
     
-    let measurementsCollectionView = MeasurementsCollectionView()
+    let measurements = MeasurementsCollectionView()
+    
+    let info = InfoTableView()
     
     let scrollView = UIView()
     
@@ -40,40 +42,49 @@ class ViewController: UIViewController {
         return button
     }()
     
-    let firstFlight: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let firstFlightValue: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
     let button: UIButton = {
         let button = UIButton()
-        button.setTitle("Hello", for: .normal)
+        button.setTitle("Show info", for: .normal)
         button.backgroundColor = .systemBlue
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-        
+    
+    init(data: DataModel.Item) {
+        self.modelItem = data
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         setupScrollView()
         setupViews()
         
-        let randomItem = Int.random(in: 0...model.item.count - 1)
-        let item = model.item[randomItem]
-        measurementsCollectionView.measurementsData.append((String(item.height.meters ?? 0),"Height"))
-        measurementsCollectionView.measurementsData.append((String(item.diameter.meters ?? 0),"Diameter"))
-        measurementsCollectionView.measurementsData.append((String(item.mass.kg),"Mass"))
-        measurementsCollectionView.measurementsData.append((String(item.payloadWeights[0].kg),"Pay load"))
+        measurements.measurementsData.append((String(modelItem.height.meters ?? 0),"Height"))
+        measurements.measurementsData.append((String(modelItem.diameter.meters ?? 0),"Diameter"))
+        measurements.measurementsData.append((String(modelItem.mass.kg),"Mass"))
+        measurements.measurementsData.append((String(modelItem.payloadWeights[0].kg),"Pay load"))
         
-        firstFlight.text = item.firstFlight
+        info.data.append(("First flight", String(modelItem.firstFlight)))
+        info.data.append(("Country", String(modelItem.country)))
+        info.data.append(("Cost", String(modelItem.costPerLaunch)))
+        
+        info.data.append(("Engines count", String(modelItem.firstStage.engines)))
+        info.data.append(("Fuel amount", String(modelItem.firstStage.fuelAmountTons)))
+        info.data.append(("Burn time", String(modelItem.firstStage.burnTimeSec ?? 0)))
+        
+        info.data.append(("Engines count", String(modelItem.secondStage.engines)))
+        info.data.append(("Fuel amount", String(modelItem.secondStage.fuelAmountTons)))
+        info.data.append(("Burn time", String(modelItem.secondStage.burnTimeSec ?? 0)))
+                
+        DispatchQueue.main.async {
+            self.info.reloadData()
+        }
 
     }
     
@@ -108,21 +119,24 @@ class ViewController: UIViewController {
         setupButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
         setupButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        contentView.addSubview(measurementsCollectionView)
-        measurementsCollectionView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20).isActive = true
-        measurementsCollectionView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        measurementsCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        measurementsCollectionView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        contentView.addSubview(measurements)
+        measurements.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20).isActive = true
+        measurements.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        measurements.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+        measurements.heightAnchor.constraint(equalToConstant: 120).isActive = true
         
-        contentView.addSubview(firstFlight)
-        firstFlight.topAnchor.constraint(equalTo: measurementsCollectionView.bottomAnchor, constant: 20).isActive = true
-        firstFlight.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-
         contentView.addSubview(button)
         button.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        button.topAnchor.constraint(equalTo: measurementsCollectionView.bottomAnchor, constant: 20).isActive = true
+        button.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor).isActive = true
         button.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1/2).isActive = true
         button.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        contentView.addSubview(info)
+        info.translatesAutoresizingMaskIntoConstraints = false
+        info.topAnchor.constraint(equalTo: measurements.bottomAnchor).isActive = true
+        info.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        info.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+        info.bottomAnchor.constraint(equalTo: button.topAnchor).isActive = true
     }
 }
 
