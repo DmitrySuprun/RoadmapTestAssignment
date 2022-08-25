@@ -39,16 +39,14 @@ class ViewController: UIViewController {
         var config = UIImage.SymbolConfiguration(pointSize: 40, weight: UIImage.SymbolWeight.medium)
         button.setPreferredSymbolConfiguration(config, forImageIn: .normal)
         button.tintColor = .white
+        button.addTarget(self, action: #selector(setupButtonPressed(_:)), for: .touchUpInside)
         return button
     }()
     
-    @objc func showInfoButtonPressed(_ sender: UIButton) {
+    @objc func setupButtonPressed(_ sender: UIButton) {
         let settingsViewController = SettingsTableViewController()
-//        present(settingsViewController, animated: true)
-        let naviVC = UINavigationController(rootViewController: self)
-        naviVC.pushViewController(settingsViewController, animated: true)
+        self.present(settingsViewController, animated: true)
     }
-    
     
     init(data: DataModel.Item) {
         self.modelItem = data

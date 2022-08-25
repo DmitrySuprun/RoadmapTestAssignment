@@ -51,13 +51,16 @@ class InfoTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
         header.contentConfiguration = content
         return header
     }
-        func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         let view = UIView()
         let showInfoButton: UIButton = {
-            let button = UIButton()
+            let button = UIButton(type: .system)
             button.setTitle("Show info", for: .normal)
-            button.backgroundColor = .systemBlue
+            button.backgroundColor = UIColor(red: 0.129, green: 0.129, blue: 0.129, alpha: 1)
+            button.tintColor = .white
+            button.layer.cornerRadius = 5
+            button.clipsToBounds = true
             button.translatesAutoresizingMaskIntoConstraints = false
             button.addTarget(self, action: #selector(showInfoButtonPressed(_:)), for: .touchUpInside)
             return button
@@ -65,14 +68,19 @@ class InfoTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
         view.addSubview(showInfoButton)
         showInfoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         showInfoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        showInfoButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/2).isActive = true
-        showInfoButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        showInfoButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 3/4).isActive = true
+        showInfoButton.heightAnchor.constraint(equalToConstant: 35).isActive = true
         
-            return section == 2 ? view : nil
+        return section == 2 ? view : nil
     }
     
     @objc func showInfoButtonPressed(_ sender: UIButton) {
-        let settingsViewController = SettingsTableViewController()
-        print("asdfasdfasfd")
+        
+        //Get current UINavigationViewController
+        let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+        let window = sceneDelegate?.window
+        guard let navigationViewController = window?.rootViewController?.presentedViewController as? UINavigationController else { return }
+        let startVC = SettingsTableViewController()
+        navigationViewController.pushViewController(startVC, animated: true)
     }
 }

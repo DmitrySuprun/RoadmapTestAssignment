@@ -29,7 +29,7 @@ class StartViewController: UIViewController {
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(startButtonPressed(_:)), for: .touchUpInside)
-        // disable button for load data
+        // disable button while load data
         button.isEnabled = false
         return button
     }()
@@ -56,8 +56,9 @@ class StartViewController: UIViewController {
     @objc func startButtonPressed(_ sender: UIButton) {
         
         let viewController = PageViewController(data: model)
+        let navigationController = UINavigationController(rootViewController: viewController)
         self.modalPresentationStyle = .fullScreen
-        self.present(viewController, animated: true)
+        self.present(navigationController, animated: true)
     }
     
     private func setupViews() {
