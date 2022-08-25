@@ -57,7 +57,7 @@ class StartViewController: UIViewController {
         
         let viewController = PageViewController(data: model)
         let navigationController = UINavigationController(rootViewController: viewController)
-        self.modalPresentationStyle = .fullScreen
+        navigationController.sheetPresentationController?.detents = [.medium(), .large()]
         self.present(navigationController, animated: true)
     }
     
