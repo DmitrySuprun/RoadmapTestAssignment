@@ -9,20 +9,27 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var modelItem: DataModel.Item
+    let modelItem: DataModel.Item
     
-    let measurements = MeasurementsCollectionView()
+    let measurements: MeasurementsCollectionView
     
     let info = InfoTableView()
     
-    let scrollView = UIView()
+    // FIXME: can't scroll content with TableView & CollectionView inside
+    let scrollView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     let contentView: UIView = {
         let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     let nameLabel: UILabel = {
+        
         let label = UILabel()
         label.text = ""
         label.font = .preferredFont(forTextStyle: .largeTitle)
@@ -33,6 +40,7 @@ class ViewController: UIViewController {
     }()
     
     let setupButton: UIButton = {
+        
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "gearshape"), for: .normal)
@@ -43,13 +51,11 @@ class ViewController: UIViewController {
         return button
     }()
     
-    @objc func setupButtonPressed(_ sender: UIButton) {
-        let settingsViewController = SettingsTableViewController()
-        self.present(settingsViewController, animated: true)
-    }
-    
     init(data: DataModel.Item) {
+        
         self.modelItem = data
+        self.measurements = MeasurementsCollectionView(data)
+        self.info.dataItem = data
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -59,15 +65,14 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = .black
+        
         setupScrollView()
         setupViews()
         
-        measurements.measurementsData.append((String(modelItem.height.meters ?? 0),"Height"))
-        measurements.measurementsData.append((String(modelItem.diameter.meters ?? 0),"Diameter"))
-        measurements.measurementsData.append((String(modelItem.mass.kg),"Mass"))
-        measurements.measurementsData.append((String(modelItem.payloadWeights[0].kg),"Pay load"))
-        
+        // FIXME: instead data feeling send DataModel
+       
         info.data.append(("First flight", String(modelItem.firstFlight)))
         info.data.append(("Country", String(modelItem.country)))
         info.data.append(("Cost", String(modelItem.costPerLaunch)))
@@ -88,8 +93,6 @@ class ViewController: UIViewController {
     
     func setupScrollView() {
         
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
@@ -130,6 +133,12 @@ class ViewController: UIViewController {
         info.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         info.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
         info.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor).isActive = true
+    }
+    
+    @objc func setupButtonPressed(_ sender: UIButton) {
+        
+        let settingsViewController = SettingsTableViewController()
+        self.navigationController?.present(settingsViewController, animated: true)
     }
 }
 

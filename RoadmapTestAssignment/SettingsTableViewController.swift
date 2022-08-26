@@ -12,7 +12,8 @@ class SettingsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.reuseID)
-        view.backgroundColor = .blue
+        view.backgroundColor = .black
+        title = "Settings"        
     }
 
     // MARK: - Table view data source

@@ -22,6 +22,7 @@
 		D5D680F128B4ECA4002351D2 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D680F028B4ECA4002351D2 /* PageViewController.swift */; };
 		D5D680F528B52ACA002351D2 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D680F428B52ACA002351D2 /* SettingsTableViewController.swift */; };
 		D5D680F728B5F16A002351D2 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D680F628B5F16A002351D2 /* SettingsTableViewCell.swift */; };
+		D5D680FD28B854C0002351D2 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D680FC28B854C0002351D2 /* InfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		D5D680F028B4ECA4002351D2 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		D5D680F428B52ACA002351D2 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		D5D680F628B5F16A002351D2 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		D5D680FC28B854C0002351D2 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				D56D2BA028AEFBDF00E9E025 /* StartViewController.swift */,
 				D5D680F428B52ACA002351D2 /* SettingsTableViewController.swift */,
 				D5D680F628B5F16A002351D2 /* SettingsTableViewCell.swift */,
+				D5D680FC28B854C0002351D2 /* InfoViewController.swift */,
 				D56D2B8628ABC8A900E9E025 /* ViewController.swift */,
 				D56D2B9828AEBCC000E9E025 /* NetService.swift */,
 				D56D2B9A28AEBCF300E9E025 /* Model.swift */,
@@ -174,6 +177,7 @@
 				D5D680ED28B40AE3002351D2 /* InfoTableView.swift in Sources */,
 				D56D2B9928AEBCC000E9E025 /* NetService.swift in Sources */,
 				D5D680F528B52ACA002351D2 /* SettingsTableViewController.swift in Sources */,
+				D5D680FD28B854C0002351D2 /* InfoViewController.swift in Sources */,
 				D56D2BA128AEFBDF00E9E025 /* StartViewController.swift in Sources */,
 				D56D2BA528AF84B600E9E025 /* MeasurementsCollectionView.swift in Sources */,
 				D56D2BA728AF84CF00E9E025 /* MeasurementsCollectionViewCell.swift in Sources */,

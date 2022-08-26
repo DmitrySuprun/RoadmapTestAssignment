@@ -9,17 +9,20 @@ import UIKit
 
 class PageViewController: UIPageViewController {
     
-    var vc1: ViewController!
-    var vc2: ViewController!
-    var vc3: ViewController!
-    var vc4: ViewController!
+    // FIXME: - ForceUnwrap
+    
+    let vc1: ViewController!
+    let vc2: ViewController!
+    let vc3: ViewController!
+    let vc4: ViewController!
     
     init(data: DataModel) {
-        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        
         self.vc1 = ViewController(data: data.item[0])
         self.vc2 = ViewController(data: data.item[1])
         self.vc3 = ViewController(data: data.item[2])
         self.vc4 = ViewController(data: data.item[3])
+        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         setViewControllers([vc1!], direction: .forward, animated: true)
         view.backgroundColor = .black
         
@@ -66,7 +69,7 @@ extension PageViewController: UIPageViewControllerDelegate, UIPageViewController
     }
     
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        4
+        self.viewControllers?.count ?? 0
     }
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         0

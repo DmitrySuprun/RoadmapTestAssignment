@@ -10,12 +10,21 @@ import UIKit
 class MeasurementsCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var measurementsData = [(String, String)]()
-
-    init() {
+    
+    let dataItem: DataModel.Item
+    
+    init (_ item: DataModel.Item) {
+        
+        self.dataItem = item
+        self.measurementsData.append((String(self.dataItem.height.meters ?? 0),"Height"))
+        self.measurementsData.append((String(self.dataItem.diameter.meters ?? 0),"Diameter"))
+        self.measurementsData.append((String(self.dataItem.mass.kg),"Mass"))
+        self.measurementsData.append((String(self.dataItem.payloadWeights[0].kg),"Pay load"))
+        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         super.init(frame: .zero, collectionViewLayout: layout)
-        
+
         translatesAutoresizingMaskIntoConstraints = false
         contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         backgroundColor = .black

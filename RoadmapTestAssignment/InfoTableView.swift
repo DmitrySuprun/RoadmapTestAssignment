@@ -9,6 +9,8 @@ import UIKit
 
 class InfoTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
+    var dataItem: DataModel.Item?
+    
     var data = [(String, String)]()
     
     override init(frame: CGRect, style: UITableView.Style) {
@@ -80,7 +82,8 @@ class InfoTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
         let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
         let window = sceneDelegate?.window
         guard let navigationViewController = window?.rootViewController?.presentedViewController as? UINavigationController else { return }
-        let startVC = SettingsTableViewController()
-        navigationViewController.pushViewController(startVC, animated: true)
+        let viewController = InfoViewController()
+        viewController.dataItem = self.dataItem
+        navigationViewController.pushViewController(viewController, animated: true)
     }
 }
